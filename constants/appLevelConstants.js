@@ -1,4 +1,9 @@
-export const globalColors = {
+import Colors from "./Colors";
+import React from "react";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../components/UI/HeaderButton";
+
+export const AppConstants = {
   colorArray: [
     "#f5428d",
     "#f54242",
@@ -33,38 +38,44 @@ export const globalColors = {
   defaultButtonStyle: {
     alignItems: "center",
     justifyContent: "center",
-    color: Colors.defaultPrimary,
+    color: Colors.light.defaultPrimary,
     marginVertical: 16,
   },
   defaultButtonTextStyle: {
-    color: Colors.defaultPrimary,
+    color: Colors.light.defaultPrimary,
     paddingHorizontal: 16,
   },
   defaultBackButtonTextStyle: {
-    color: Colors.dark,
+    color: Colors.light.dark,
     paddingHorizontal: 16,
   },
   defaultBackButtonStyle: {
     alignItems: "center",
     justifyContent: "center",
-    color: Colors.dark,
+    color: Colors.light.dark,
     // width: "100%",
     // marginVertical: 5,
   },
 };
 
-export const DefaultNavOptions = (navData) => {
+export const defaultNavigationOptions = (navData) => {
   return {
     headerTitle: "Event Driven MKE",
     headerStyle: {
-      // backgroundColor: Platform.OS === "android" ? Colors.primaryColor : "",
-      backgroundColor: Colors.primaryColor,
-      borderBottomWidth: 1,
-      borderBottomColor: "#ccc",
+      backgroundColor: Platform.OS === "android" ? Colors.primaryColor : "",
     },
-    headerLeft: () => <HeaderButtonComponent />,
-    // headerTintColor:   Platform.OS === "android" ? Colors.textColor :
-    // Colors.primaryColor,
-    headerTintColor: globalColors.l.textColor,
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title="menu"
+          iconName="ios-menu"
+          onPress={() => {
+            navData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    ),
+    headerTintColor:
+      Platform.OS === "android" ? Colors.textColor : Colors.primaryColor,
   };
 };
