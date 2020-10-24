@@ -52,7 +52,6 @@
     "react-navigation-header-buttons": "^5.0.2",
     "react-redux": "^7.2.1",
     "redux": "^4.0.5",
-    "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
@@ -68,7 +67,9 @@
     "jest-expo": "^39.0.0",
     "metro-react-native-babel-preset": "^0.63.0",
     "react-devtools": "^4.8.2",
+    "react-native-debugger-open": "^0.3.25",
     "react-native-dotenv": "^2.4.1",
+    "redux-devtools-extension": "^2.13.8",
     "react-test-renderer": "^16.14.0",
     "typescript": "~3.9.2"
   },

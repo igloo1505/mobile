@@ -4,6 +4,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/UI/HeaderButton";
 
 export const AppConstants = {
+  serverRoot: "https://c87c182c2de1.ngrok.io",
   colorArray: [
     "#f5428d",
     "#f54242",
@@ -60,10 +61,20 @@ export const AppConstants = {
 
 export const defaultNavigationOptions = (navData) => {
   return {
-    headerTitle: "Event Driven MKE",
+    headerTitle: "Medication Timer",
     headerStyle: {
-      backgroundColor: Platform.OS === "android" ? Colors.primaryColor : "",
+      backgroundColor: Colors.dark.primaryColor,
     },
+    headerTintColor: Colors.dark.textColor,
+    // headerTitleStyle: {
+
+    // },
+    // headerTextStyle: {},
+    // headerTitleColor: {
+
+    // },
+    // headerBackTitleStyle: {}
+    // headerBackTitleColor: {}
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item
@@ -75,7 +86,6 @@ export const defaultNavigationOptions = (navData) => {
         />
       </HeaderButtons>
     ),
-    headerTintColor:
-      Platform.OS === "android" ? Colors.textColor : Colors.primaryColor,
+
   };
 };

@@ -13,19 +13,16 @@ import { Input } from "react-native-elements";
 import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
 import { Text, Button } from "native-base";
-// import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import Card from "../components/UI/Card";
 import { LinearGradient } from "expo-linear-gradient";
-// import { loginUser } from "../actions/userActions";
-
-// import Input from "../components/UI/Input";
+import { loginUser } from "../stateManagement/actions/userActions";
 import Colors from "../constants/Colors";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 // TODO go back and fix errorMessage so it conditionally renders. Right now if uncommented it shows up regardless
 
-const LoginForm = () => {
+const LoginForm = ({ user, app, loginUser }) => {
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   //   const dispatch = useDispatch();
@@ -35,10 +32,7 @@ const LoginForm = () => {
 
   const handleSubmit = () => {
     let User = { email, password };
-    console.log("Login User", User);
-
-    // dispatch({ type: SET_LOADING, payload: true });
-    // loginUser(User);
+    loginUser(User);
   };
 
   return (
@@ -180,9 +174,10 @@ const styles = StyleSheet.create({
   },
 });
 
-// const mapStateToProps = (state) => ({
-//   user: state.user,
-// });
+const mapStateToProps = (state, ownProps) => ({
+  user: state.user,
+  app: state.app,
+  props: ownProps,
+});
 
-export default LoginForm;
-// export default connect(mapStateToProps, { loginUser })(SignInForm);
+export default connect(mapStateToProps, { loginUser })(LoginForm);

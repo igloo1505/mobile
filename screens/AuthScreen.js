@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   View,
   ScrollView,
@@ -6,26 +6,28 @@ import {
   StyleSheet,
   Button,
 } from "react-native";
-import { Input } from "react-native-elements";
-
-// import SignUpForm from "../components/SignUpForm";
-// import SignInForm from "../components/SignInForm";
-import { connect } from "react-redux";
-import { Text } from "native-base";
-import { Ionicons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-// import Card from "../components/UI/Card";
+import {SET_FOCUSED} from '../stateManagement/actions/Types'
+import LoginForm from "../components/LoginForm";
 import { LinearGradient } from "expo-linear-gradient";
 // import { loginUser } from "../actions/userActions";
+import { loginUser } from "../stateManagement/actions/userActions";
+import { setFocused } from "../stateManagement/actions/globalActions";
 // import Input from "../components/UI/Input";
 import Colors from "../constants/Colors";
-import BottomTabNavigator from "../navigation/BottomTabNavigator";
+import { connect, useDispatch } from "react-redux";
+import {useFocusEffect} from '@react-navigation/native'
 
 // TODO go back and fix errorMessage so it conditionally renders. Right now if uncommented it shows up regardless
 
 // !! props used once redux setup
 // { user, layout: { signUpForm }, props, loginUser }
-const AuthScreen = () => {
+const AuthScreen = ({ user, app, setFocused }) => {
+  useFocusEffect(
+    useCallback(() => {
+       setFocused()
+    }, [])
+    )
+
   let [signUp, setSignUp] = useState(false);
 
   return (
@@ -34,19 +36,11 @@ const AuthScreen = () => {
         colors={[Colors.dark.primaryColor, Colors.dark.accentColor]}
         style={styles.gradientStyle}
       >
-        <Text>Test</Text>
+        <LoginForm />
       </LinearGradient>
     </View>
   );
 };
-
-// AuthScreen.navigationOptions = {
-//   headerTitle: "Event Driven MKE",
-//   headerStyle: {
-//     backgroundColor: Colors.primaryColor,
-//   },
-//   headerTintColor: Colors.textColor,
-// };
 
 const styles = StyleSheet.create({
   mainView: {
@@ -63,11 +57,16 @@ const styles = StyleSheet.create({
   },
 });
 
-// const mapStateToProps = (state, ownProps) => ({
-//   user: state.user,
-//   layout: state.layout,
-//   props: ownProps,
-// });
+const mapStateToProps = (state, ownProps) => ({
+  user: state.user,
+  app: state.app,
+  props: ownProps,
+});
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setFocused: () => dispatch({ type: SET_FOCUSED, payload: "login"})
+  }
+}
 
-export default AuthScreen;
-// export default connect(mapStateToProps)(AuthScreen);
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen);

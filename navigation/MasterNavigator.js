@@ -1,28 +1,38 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import {
   AppConstants,
   DefaultNavOptions,
 } from "../constants/appLevelConstants";
+import { AsyncStorage } from "react-native";
 import { UnauthenticatedDrawer } from "./UnAuthenticatedNavigator";
+import  AuthenticatedDrawer  from "./authenticatedNavigator";
 import { Spinner } from "native-base";
 import {
   NavigationContainer,
   DrawerActions,
   useNavigation,
 } from "@react-navigation/native";
+import { connect, useDispatch } from "react-redux";
 
 //! Props used once redux setup
 // { user, loading, props }
-const MasterNavigator = () => {
+const MasterNavigator = ({ user, app }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // if (user.loggedIn) {
+  //   setIsLoggedIn(true);
+  // }
   let loading = loading || false;
   // props = props || {};
-  let user = user || {};
+
+  // console.log(user);
+  // console.log(app);
+
   // let isAuthenticated = user.loggedIn || false;
   // loading = false;
   if (!loading) {
     return (
       <NavigationContainer>
-        <UnauthenticatedDrawer />
+        {user.loggedIn ? <AuthenticatedDrawer /> : <UnauthenticatedDrawer />}
       </NavigationContainer>
     );
   } else if (loading) {
@@ -34,4 +44,10 @@ const MasterNavigator = () => {
   }
 };
 
-export default MasterNavigator;
+const mapStateToProps = (state, ownProps) => ({
+  user: state.user,
+  app: state.app,
+  // medication: state.medication
+});
+
+export default connect(mapStateToProps)(MasterNavigator);
