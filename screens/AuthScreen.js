@@ -8,10 +8,8 @@ import {
 } from "react-native";
 import {SET_FOCUSED} from '../stateManagement/actions/Types'
 import LoginForm from "../components/LoginForm";
+import SignUpStepForm from "../components/SignUp/SignUpStepForm";
 import { LinearGradient } from "expo-linear-gradient";
-// import { loginUser } from "../actions/userActions";
-import { loginUser } from "../stateManagement/actions/userActions";
-import { setFocused } from "../stateManagement/actions/globalActions";
 // import Input from "../components/UI/Input";
 import Colors from "../constants/Colors";
 import { connect, useDispatch } from "react-redux";
@@ -27,16 +25,20 @@ const AuthScreen = ({ user, app, setFocused }) => {
        setFocused()
     }, [])
     )
-
-  let [signUp, setSignUp] = useState(false);
-
+    const [login, setLogin] = useState(true)
+    const toggleLogin = () => {
+      setLogin(!login)
+    }
   return (
     <View style={styles.mainView}>
       <LinearGradient
         colors={[Colors.dark.primaryColor, Colors.dark.accentColor]}
         style={styles.gradientStyle}
       >
-        <LoginForm />
+     {login? 
+      <LoginForm toggleLogin={toggleLogin} /> : 
+      <SignUpStepForm toggleLogin={toggleLogin}/>
+    } 
       </LinearGradient>
     </View>
   );

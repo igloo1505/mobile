@@ -4,7 +4,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/UI/HeaderButton";
 
 export const AppConstants = {
-  serverRoot: "https://c87c182c2de1.ngrok.io",
+  serverRoot: "https://ec2be8b96f90.ngrok.io",
   colorArray: [
     "#f5428d",
     "#f54242",

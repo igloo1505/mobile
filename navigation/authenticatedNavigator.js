@@ -68,7 +68,7 @@ const logoutStack = (props) => {
     drawerContent={({navigation}) => {
       // console.log('props: ', props);
       // let navData = props
-      console.log('navData: ', navigation);
+
         return (
           <View style={{ flex: 1, paddingTop: 20 }}>
             <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>

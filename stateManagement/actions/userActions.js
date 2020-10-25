@@ -28,6 +28,18 @@ export const loginUser = (user) => async (dispatch) => {
   }
 };
 
+export const registerUser = (user) => async (dispatch) => {
+  try {
+    console.log("Running register User...")
+      const res = await Axios.post(`${serverRoot}/users`, user, config)
+      dispatch({ type: REGISTER_SUCCESS, payload: res.data})
+      console.log("res.data: ", res.data)
+  } catch (error) {
+    console.log("Caught Error:", error);
+    dispatch({ type: REGISTER_FAIL, payload: error.response });
+  }
+}
+
 
 export const logoutUser = () => async (dispatch) =>{
   console.log("running Logout User...")
