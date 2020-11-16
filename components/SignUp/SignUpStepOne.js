@@ -21,6 +21,44 @@ import { SafeAreaView } from "react-native-safe-area-context";
 // TODO go back and fix errorMessage so it conditionally renders. Right now if uncommented it shows up regardless
 
 const SignUpStepOne = ({ user, app, props}) => {
+  const [errors, setErrors] = useState({
+    nameError: "",
+    emailError: "",
+    ageError: "",
+    showNameError: false,
+    showEmailError: false,
+    showAgeError: false,
+  })
+
+
+  const handleNextStep = () => {
+    console.log("running handleNextStep");
+    let User = props.user
+    console.log('User: ', User);
+    if(User.name === ""){
+      return setErrors({...errors, nameError: "Please Enter a name", showNameError: true})
+    }
+    if(User.name !== ""){
+      setErrors({...errors, nameError: "", showNameError: false})
+    }
+    if(User.email === ""){
+      return setErrors({...errors, nameError: "", showNameError: false, emailError: "Please Enter an email address", showEmailError: true})
+    }
+    if(User.email !== ""){
+      setErrors({...errors, emailError: "", showEmailError: false})
+    }
+    if(User.age < 10 || User.age > 99){
+      return setErrors({...errors, nameError: "", showNameError: false, emailError: "", showEmailError: false, ageError: "Please Enter a valid age", showAgeError: true})
+    }
+    if(User.age >= 10 && User.age <= 99){
+      setErrors({...errors, ageError: "", showAgeError: false})
+    }
+    if(User.age > 12 && User.age < 99 && User.email !== "" && User.name !== ""){
+      props.setStep(2)
+    }
+  }
+
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -50,6 +88,7 @@ const SignUpStepOne = ({ user, app, props}) => {
                 textContentType="givenName"
                 keyboardType="default"
                 autoCapitalize="words"
+                errorMessage={errors.showNameError ? errors.nameError : ""}
                 leftIcon={
                   <AntDesign
                     name="user"
@@ -69,7 +108,7 @@ const SignUpStepOne = ({ user, app, props}) => {
                 onChangeText={(text) => {
                     props.setUser({...props.user, "email": text})
                 }}
-                // errorMessage="Please enter a valid password"
+                errorMessage={errors.showEmailError ? errors.emailError : ""}
                 leftIcon={
                   <AntDesign
                     name="mail"
@@ -82,12 +121,13 @@ const SignUpStepOne = ({ user, app, props}) => {
               <Input
                 placeholder="Age"
                 // secureTextEntry
+                value={props.user.age}
                 label="Age"
                 keyboardType="number-pad"
                 onChangeText={(text) => {
-                    props.setUser({...props.user, "age": text})
+                    props.setUser({...props.user, "age": parseInt(text.replace(/[^0-9]/g, '')),})
                 }}
-                // errorMessage="Please enter a valid password"
+                errorMessage={errors.showAgeError ? errors.ageError : ""}
                 leftIcon={
                   <MaterialCommunityIcons
                     name="sort-numeric"
@@ -115,7 +155,7 @@ const SignUpStepOne = ({ user, app, props}) => {
               <Button
                 bordered
                 block
-                onPress={() => props.setStep(2)}
+                onPress={() => handleNextStep()}
                 style={styles.forwardButtonStyle}
                 title="nextStep"
               >

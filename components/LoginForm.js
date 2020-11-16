@@ -22,8 +22,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 // TODO go back and fix errorMessage so it conditionally renders. Right now if uncommented it shows up regardless
 
-const LoginForm = ({ user, app, loginUser, props }) => {
-  console.log(props)
+export const LoginForm = ({ user, app, loginUser, props }) => {
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   //   const dispatch = useDispatch();
@@ -59,6 +58,7 @@ const LoginForm = ({ user, app, loginUser, props }) => {
               <Input
                 placeholder="Email"
                 label="Email"
+                testID="email"
                 onChangeText={(text) => setEmail(text)}
                 textContentType="username"
                 keyboardType="default"
@@ -75,6 +75,7 @@ const LoginForm = ({ user, app, loginUser, props }) => {
               />
               <Input
                 placeholder="Password"
+                testID="password"
                 secureTextEntry
                 label="Password"
                 minLength={8}
@@ -96,12 +97,14 @@ const LoginForm = ({ user, app, loginUser, props }) => {
                 onPress={handleSubmit}
                 style={styles.buttonStyle}
                 title="Login"
+                testID="login"
               >
                 <Text>Login</Text>
               </Button>
               <Button
                 bordered
                 block
+                testID="registerFormRedirect"
                 onPress={() => props.toggleLogin()}
                 style={styles.switchButtonStyle}
                 title="SignUp"
@@ -182,3 +185,4 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 export default connect(mapStateToProps, { loginUser })(LoginForm);
+

@@ -21,7 +21,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 // TODO go back and fix errorMessage so it conditionally renders. Right now if uncommented it shows up regardless
 
-const SignUpStepTwo = (props) => {
+const SignUpStepTwo = ({user, app, props}) => {
   const [errorMessage, setErrorMessage] = useState("")
   const [errorMessageTwo, setErrorMessageTwo] = useState("")
   const [showError, setShowError] = useState(false)
@@ -46,18 +46,15 @@ const SignUpStepTwo = (props) => {
     if(passwordOne === passwordTwo){
       setErrorMessageTwo("")
       setShowErrorTwo(false)
+      // props.setUser({...props.user, "password": passwordOne})
       props.registerUser()
     }
   }
 
-const handlePasswordCompare = () => {
-  console.log("running password compare outside if ")
-  console.log('showError: ', showError);
-  console.log('passwordOne === passwordTwo: ', passwordOne === passwordTwo);
-  console.log('passwordTwo: ', passwordTwo);
-  console.log('passwordOne: ', passwordOne);
-  if(passwordOne === passwordTwo && !showError){
+const handlePasswordCompare = (text) => {
+  if((text == passwordOne) && !showError){
     console.log("running password compare inside if ")
+    console.log('props.user: ', props.user);
     props.setUser({...props.user, "password": passwordOne})
   }
 }
@@ -118,7 +115,7 @@ const handlePasswordCompare = () => {
                 autoCapitalize="none"
                 onChangeText={(text) => {
                   setPasswordTwo(text)
-                  handlePasswordCompare()
+                  handlePasswordCompare(text)
               }}
               errorMessage={showErrorTwo ? errorMessageTwo : ""}
                 leftIcon={
@@ -266,5 +263,11 @@ const mapStateToProps = (state, ownProps) => ({
   app: state.app,
   props: ownProps,
 });
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     registerUser: () => dispatch({type: registerUser})
+//   }
+// }
 
 export default connect(mapStateToProps)(SignUpStepTwo);

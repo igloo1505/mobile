@@ -116,6 +116,7 @@ exports[`renders loginForm correctly 1`] = `
                 allowFontScaling={true}
                 autoCapitalize="none"
                 editable={true}
+                id="emailTest"
                 keyboardType="default"
                 onChangeText={[Function]}
                 placeholder="Email"
@@ -195,6 +196,7 @@ exports[`renders loginForm correctly 1`] = `
               <TextInput
                 allowFontScaling={true}
                 editable={true}
+                id="passwordTest"
                 minLength={8}
                 onChangeText={[Function]}
                 placeholder="Password"

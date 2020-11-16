@@ -13,3 +13,5 @@ notepad/*
 
 # macOS
 .DS_Store
+
+.notepad

@@ -16,12 +16,15 @@ import { connect, useDispatch } from "react-redux";
 
 //! Props used once redux setup
 // { user, loading, props }
-const MasterNavigator = ({ user, app }) => {
+// !! Add user back into props, just avoiding login screen for now
+const MasterNavigator = ({  app }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   // if (user.loggedIn) {
   //   setIsLoggedIn(true);
   // }
   let loading = loading || false;
+  let user = {}
+  user.loggedIn = true
   // props = props || {};
 
   // console.log(user);

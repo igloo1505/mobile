@@ -6,7 +6,10 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest --watchAll"
+    "test": "node_modules/.bin/jest test/**/*.spec.js",
+    "dl_expo_bins": "./scripts/dl_expo_bins",
+    "detox": "detox test --loglevel verbose --watch",
+    "push": "git add --all && git commit -m \"nondescript fast deploy message\" && git push"
   },
   "jest": {
     "preset": "jest-expo",
@@ -20,6 +23,16 @@
     "transformIgnorePatterns": [
       "node_modules/(?!(jest-)?react-native|@codler|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)"
     ]
+  },
+  "detox": {
+    "test-runner": "jest",
+    "configurations": {
+      "ios.sim": {
+        "binaryPath": "bin/Exponent.app",
+        "type": "ios.simulator",
+        "name": "iPhone 11"
+      }
+    }
   },
   "dependencies": {
     "@expo/vector-icons": "^10.0.0",
@@ -64,13 +77,17 @@
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-expo": "^8.3.0",
+    "detox-expo-helpers": "^0.6.0",
+    "expo-detox-hook": "^1.0.10",
+    "jest-circus": "^26.6.2",
     "jest-expo": "^39.0.0",
     "metro-react-native-babel-preset": "^0.63.0",
     "react-devtools": "^4.8.2",
     "react-native-debugger-open": "^0.3.25",
     "react-native-dotenv": "^2.4.1",
-    "redux-devtools-extension": "^2.13.8",
     "react-test-renderer": "^16.14.0",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-mock-store": "^1.5.4",
     "typescript": "~3.9.2"
   },
   "private": true

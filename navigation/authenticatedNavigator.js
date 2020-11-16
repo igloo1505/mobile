@@ -56,11 +56,12 @@ const logoutStack = (props) => {
 
 
  const AuthenticatedDrawer = (props) => {
-
    const Drawer = createDrawerNavigator();
   const handleLogout = (navStuff) => {
+    console.log("navStuff", navStuff)
+    console.log("props", props)
     props.logOut()
-    navStuff.navigation.navigate("login")
+    navStuff.navigate("login")
 }
 
   return (
@@ -74,14 +75,14 @@ const logoutStack = (props) => {
             <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
             <DrawerItem
             label="Dashboard"
-            onPress={() => navData.navigation.navigate("Dashboard")}
+            onPress={() => navigation.navigate("Dashboard")}
             activeTintColor={Colors.dark.textColor}
         activeBackgroundColor= {Colors.dark.primaryColor}
         inactiveTintColor={Colors.dark.primaryColor}
             />  
               <DrawerItem
         label="Log Out"
-        onPress={() => handleLogout(navData)}
+        onPress={() => handleLogout(navigation)}
         activeTintColor={Colors.dark.textColor}
         activeBackgroundColor= {Colors.dark.primaryColor}
         // inactiveBackgroundColor={Colors.dark.primaryColor}

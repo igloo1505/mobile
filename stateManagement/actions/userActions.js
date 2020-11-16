@@ -45,3 +45,4 @@ export const logoutUser = () => async (dispatch) =>{
   console.log("running Logout User...")
   dispatch({ type: LOGOUT_USER})
 }
+
