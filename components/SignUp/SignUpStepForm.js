@@ -20,7 +20,7 @@ const SignUpStepForm = ({userFromState, app, props, register}) => {
             email: user.email,
             password: user.password,
         }
-        console.log(User)
+        console.log("User in here", User)
     }, [user])
     const registerUser = () => {
     let User = { 

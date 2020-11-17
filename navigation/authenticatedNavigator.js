@@ -11,6 +11,14 @@ import {
   DrawerItemList,
   DrawerItem
 } from "@react-navigation/drawer";
+import {
+  HeaderButtons,
+  HeaderButton,
+  Item,
+  HiddenItem,
+  OverflowMenu,
+} from 'react-navigation-header-buttons';
+
 import {logoutUser} from '../stateManagement/actions/userActions'
 import LOGOUT_USER from "../stateManagement/actions/Types"
 import {
@@ -22,7 +30,16 @@ import {
 import {
   AppConstants,
   defaultNavigationOptions,
+  authenticatedNavigationOptions
 } from "../constants/appLevelConstants";
+
+
+const IoniconsHeaderButton = (props) => (
+  // the `props` here come from <Item ... />
+  // you may access them and pass something else to `HeaderButton` if you like
+  <HeaderButton IconComponent={Ionicons} iconSize={23} color="blue" {...props} />
+);
+
 
 const AuthenticatedStack = createStackNavigator();
 
@@ -32,11 +49,12 @@ const AuthenticatedTree = (props) => {
       <AuthenticatedStack.Screen
         name="dashboard"
         component={Dashboard}
-        options={defaultNavigationOptions}
+        options={authenticatedNavigationOptions}
       />
     </AuthenticatedStack.Navigator>
   );
 };
+
 
 const LogoutStack = createStackNavigator();
 
@@ -46,7 +64,7 @@ const logoutStack = (props) => {
     <LogoutStack.Screen
     name="login"
     component={AuthScreen}
-    options={defaultNavigationOptions}
+    options={authenticatedNavigationOptions}
     />
     </LogoutStack.Navigator>
   )
@@ -77,23 +95,23 @@ const logoutStack = (props) => {
             label="Dashboard"
             onPress={() => navigation.navigate("Dashboard")}
             activeTintColor={Colors.dark.textColor}
-        activeBackgroundColor= {Colors.dark.primaryColor}
-        inactiveTintColor={Colors.dark.primaryColor}
+        activeBackgroundColor= {Colors.dark.textColor}
+        inactiveTintColor={Colors.dark.textColor}
             />  
               <DrawerItem
         label="Log Out"
         onPress={() => handleLogout(navigation)}
         activeTintColor={Colors.dark.textColor}
-        activeBackgroundColor= {Colors.dark.primaryColor}
-        // inactiveBackgroundColor={Colors.dark.primaryColor}
-        inactiveTintColor={Colors.dark.primaryColor}
+        activeBackgroundColor= {Colors.dark.textColor}
+        // inactiveBackgroundColor={Colors.dark.textColor}
+        inactiveTintColor={Colors.dark.textColor}
       />
             </SafeAreaView>
           </View>
         );
       }}
       drawerContentOptions={{
-        // activeTintColor: Colors.dark.primaryColor, 
+        // activeTintColor: Colors.dark.prim'aryColor, 
         activeTintColor: '#e91e63',
         activeBackgroundColor: Colors.dark.primaryColor,
         inactiveBackgroundColor: '#e91e63',

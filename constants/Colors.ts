@@ -32,7 +32,7 @@ export default {
     success: "#5cb85c",
     dark: "#000",
     danger: "#d9534f",
-    textColor: "#fff",
+    textColor: "#000",
   },
   colorGenerator: {
     colorPrimary100: "#D6E4FF",

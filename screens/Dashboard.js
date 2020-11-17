@@ -1,17 +1,19 @@
-import React from "react";
-import { View, Text, ScrollView, StyleSheet, FlatList } from "react-native";
+import React, {useLayoutEffect} from "react";
+import { View, Text, ScrollView, StyleSheet, FlatList, SafeAreaView } from "react-native";
 import GridTile from "../components/GridTile"
 import { connect, useDispatch } from "react-redux";
 import Colors from '../constants/Colors'
 import { StackActions, useFocusEffect } from "@react-navigation/native";
 import appLevelConstants from "../constants/appLevelConstants"
 import { LinearGradient } from "expo-linear-gradient";
+import {UsageWithIcons} from '../utilFunctions'
 
 
 const Dashboard = ({user, app}) => {
+
   const redirectAndLoad = () => {}
-  console.log('user: ', user);
-  console.log('app: ', app);
+  // console.log('user: ', user);
+  // console.log('app: ', app);
   const renderGridItem = (itemData) => {
     return (
       <GridTile
@@ -36,15 +38,14 @@ const Dashboard = ({user, app}) => {
   
   return (
     <View id="dashboard">
-      <Text>Dashboard Goes here</Text>
-      <ScrollView>
+      <SafeAreaView >
       <FlatList
-        keyExtractor={(item, index) => item.id}
-        data={timerArray}
-        numColumns={2}
-        renderItem={renderGridItem}
+      keyExtractor={(item, index) => item.id}
+      data={timerArray}
+      numColumns={2}
+      renderItem={renderGridItem}
       />
-    </ScrollView>
+      </SafeAreaView>
     </View>
   );
 };

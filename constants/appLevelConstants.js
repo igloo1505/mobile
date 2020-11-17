@@ -1,7 +1,26 @@
 import Colors from "./Colors";
 import React from "react";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/UI/HeaderButton";
+import {
+  HeaderButtons,
+  HeaderButton,
+  Item,
+  HiddenItem,
+  OverflowMenu,
+} from 'react-navigation-header-buttons';
+import { Ionicons } from '@expo/vector-icons';
+
+
+
+const ReusableItem = ({ onPress }) => <Item title="Edit" onPress={onPress} />
+
+
+const IoniconsHeaderButton = (props) => (
+  // the `props` here come from <Item ... />
+  // you may access them and pass something else to `HeaderButton` if you like
+  <HeaderButton IconComponent={Ionicons} iconSize={23} color={Colors.dark.textColor} {...props} />
+);
+
 
 export const AppConstants = {
   serverRoot: "https://1ac8dfc8bbed.ngrok.io",
@@ -87,5 +106,50 @@ export const defaultNavigationOptions = (navData) => {
       </HeaderButtons>
     ),
 
+  };
+};
+
+export const authenticatedNavigationOptions = (navData) => {
+  return {
+    headerTitle: "Medication Timer",
+    headerStyle: {
+      backgroundColor: "transparent"
+    },
+    headerTintColor: Colors.dark.textColor,
+    // headerTitleStyle: {
+
+    // },
+    // headerTextStyle: {},
+    // headerTitleColor: {
+
+    // },
+    // headerBackTitleStyle: {}
+    // headerBackTitleColor: {}
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title="menu"
+          iconName="ios-menu"
+          onPress={() => {
+            navData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    ),
+ 
+
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
+
+        <ReusableItem onPress={() => alert('Edit')} />
+        <OverflowMenu
+          style={{ marginHorizontal: 10 }}
+          OverflowIcon={<Ionicons name="ios-more" size={23} color={Colors.dark.textColor} />}
+        >
+          <HiddenItem title="hidden1" onPress={() => alert('hidden1')} style={{color: Colors.dark.textColor, fontSize: 50, textColor: Colors.dark.textColor}}/>
+        </OverflowMenu>
+      </HeaderButtons>
+    ),
+  
   };
 };
