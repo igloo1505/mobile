@@ -1,4 +1,4 @@
-import { SET_LOADING, SET_FOCUSED } from "./Types";
+import { SET_LOADING, SET_FOCUSED, TOGGLE_ADD_TIMER_MODAL } from "./Types";
 import { AsyncStorage } from "react-native";
 import { Alert } from "react-native";
 
@@ -6,6 +6,7 @@ const initialState = {
   triedAutoLogin: false,
   loading: false,
   focused: "",
+  showAddTimerModal: false,
   error: null,
 };
 
@@ -20,6 +21,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         focused: action.payload
+      }
+      case TOGGLE_ADD_TIMER_MODAL: 
+      return {
+          ...state,
+         showAddTimerModal: !state.showAddTimerModal     
       }
     default:
       return state;

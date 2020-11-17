@@ -1,5 +1,5 @@
 import Colors from "./Colors";
-import React from "react";
+import React, {useState} from "react";
 import CustomHeaderButton from "../components/UI/HeaderButton";
 import {
   HeaderButtons,
@@ -9,11 +9,12 @@ import {
   OverflowMenu,
 } from 'react-navigation-header-buttons';
 import { Ionicons } from '@expo/vector-icons';
+import AddTimerModal from '../components/AddTimerModal'
 
 
 
 const ReusableItem = ({ onPress }) => <Item title="Edit" onPress={onPress} />
-
+const AddTimer = (view) => <AddTimerModal/>
 
 const IoniconsHeaderButton = (props) => (
   // the `props` here come from <Item ... />
@@ -79,6 +80,7 @@ export const AppConstants = {
 };
 
 export const defaultNavigationOptions = (navData) => {
+  const [modalIsVisible, setModalIsVisible] = useState(false)
   return {
     headerTitle: "Medication Timer",
     headerStyle: {
@@ -110,6 +112,8 @@ export const defaultNavigationOptions = (navData) => {
 };
 
 export const authenticatedNavigationOptions = (navData) => {
+  const [modalIsVisible, setModalIsVisible] = useState(false)
+  const setModalView = () => setModalIsVisible(!modalIsVisible)
   return {
     headerTitle: "Medication Timer",
     headerStyle: {
@@ -140,16 +144,17 @@ export const authenticatedNavigationOptions = (navData) => {
 
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-
         <ReusableItem onPress={() => alert('Edit')} />
         <OverflowMenu
           style={{ marginHorizontal: 10 }}
           OverflowIcon={<Ionicons name="ios-more" size={23} color={Colors.dark.textColor} />}
         >
-          <HiddenItem title="hidden1" onPress={() => alert('hidden1')} style={{color: Colors.dark.textColor, fontSize: 50, textColor: Colors.dark.textColor}}/>
+          <HiddenItem title="Add Timer" onPress={() => {
+            console.log("Add Timer here")
+
+          }} style={{color: Colors.dark.textColor, fontSize: 50, textColor: Colors.dark.textColor}}/>
         </OverflowMenu>
       </HeaderButtons>
-    ),
-  
+    )
   };
 };

@@ -12,6 +12,7 @@ import {
   DrawerActions,
   useNavigation,
 } from "@react-navigation/native";
+import { useReduxDevToolsExtension } from '@react-navigation/devtools';
 import { connect, useDispatch } from "react-redux";
 
 //! Props used once redux setup
@@ -25,6 +26,8 @@ const MasterNavigator = ({  app }) => {
   let loading = loading || false;
   let user = {}
   user.loggedIn = true
+  const navigationRef = React.useRef();
+  // useReduxDevToolsExtension(navigationRef);
   // props = props || {};
 
   // console.log(user);
@@ -34,7 +37,7 @@ const MasterNavigator = ({  app }) => {
   // loading = false;
   if (!loading) {
     return (
-      <NavigationContainer>
+      <NavigationContainer >
         {user.loggedIn ? <AuthenticatedDrawer /> : <UnauthenticatedDrawer />}
       </NavigationContainer>
     );

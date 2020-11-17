@@ -6,12 +6,21 @@ import {
   REGISTER_FAIL,
 } from "./Types";
 import setAuthToken from "../setAuth";
-import { AsyncStorage } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from "react-native";
+
+
+const getToken = async () => {
+  let token = await AsyncStorage.getItem("token")
+  if(token){
+    return token
+  }
+  else return null
+}
 
 const initialState = {
   loggedIn: false,
-  token: AsyncStorage.getItem("token") || null,
+  token: null,
   user: null,
   triedAutoLogin: false,
   error: null,

@@ -5,6 +5,8 @@ import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 import Dashboard from "../screens/Dashboard";
 import AuthScreen from "../screens/AuthScreen";
+import AddTimerModal from '../components/AddTimerModal'
+import CustomHeaderButton from "../components/UI/HeaderButton";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
   createDrawerNavigator,
@@ -20,7 +22,7 @@ import {
 } from 'react-navigation-header-buttons';
 
 import {logoutUser} from '../stateManagement/actions/userActions'
-import LOGOUT_USER from "../stateManagement/actions/Types"
+import {LOGOUT_USER, TOGGLE_ADD_TIMER_MODAL} from "../stateManagement/actions/Types"
 import {
   NavigationContainer,
   DrawerActions,
@@ -41,19 +43,82 @@ const IoniconsHeaderButton = (props) => (
 );
 
 
+const ShowAddTimer = (props) => {
+  return (<AddTimerModal show={props.show}/>)
+}
+
 const AuthenticatedStack = createStackNavigator();
 
-const AuthenticatedTree = (props) => {
+
+
+const AuthenticatedTree = (
+) => {
+
+  const dispatch = useDispatch()
+  const ReusableItem = ({ onPress }) => <Item title="Edit" onPress={onPress} />
+
+const IoniconsHeaderButton = (props) => (
+  <HeaderButton IconComponent={Ionicons} iconSize={23} color={Colors.dark.textColor} {...props} />
+);
+
+  const navOptions = () => {
+    return {
+      headerTitle: "Medication Timer",
+      headerStyle: {
+        backgroundColor: "transparent"
+      },
+      headerTintColor: Colors.dark.textColor,
+      headerLeft: () => (
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+          <Item
+            title="menu"
+            iconName="ios-menu"
+            onPress={() => {
+              navData.navigation.toggleDrawer();
+            }}
+          />
+        </HeaderButtons>
+      ),
+   
+  
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
+          <ReusableItem onPress={() => alert('Edit')} />
+          <OverflowMenu
+            style={{ marginHorizontal: 10 }}
+            OverflowIcon={<Ionicons name="ios-more" size={23} color={Colors.dark.textColor} />}
+          >
+            <HiddenItem title="Add Timer MothaFuckaaaa" onPress={() => {
+              console.log("Add Timer here")
+              dispatch({ type: 'TOGGLE_ADD_TIMER_MODAL'})
+  
+            }} style={{color: Colors.dark.textColor, fontSize: 50, textColor: Colors.dark.textColor}}/>
+          </OverflowMenu>
+        </HeaderButtons>
+      )
+    }
+  }
+
+
+
   return (
-    <AuthenticatedStack.Navigator>
+    <AuthenticatedStack.Navigator
+    >
+    <AuthenticatedStack.Screen
+    name="dashboard"
+    component={Dashboard}
+        options={navOptions}
+      />
       <AuthenticatedStack.Screen
-        name="dashboard"
-        component={Dashboard}
-        options={authenticatedNavigationOptions}
+      name="addTimer"
+      component={ShowAddTimer}
+      options={authenticatedNavigationOptions}
       />
     </AuthenticatedStack.Navigator>
   );
 };
+
+
 
 
 const LogoutStack = createStackNavigator();
@@ -74,6 +139,7 @@ const logoutStack = (props) => {
 
 
  const AuthenticatedDrawer = (props) => {
+   console.log('props in navigator ', props);
    const Drawer = createDrawerNavigator();
   const handleLogout = (navStuff) => {
     console.log("navStuff", navStuff)
@@ -81,13 +147,14 @@ const logoutStack = (props) => {
     props.logOut()
     navStuff.navigate("login")
 }
+const toggleModal = () => {
+  props.toggleModal()
+}
+
 
   return (
     <Drawer.Navigator
     drawerContent={({navigation}) => {
-      // console.log('props: ', props);
-      // let navData = props
-
         return (
           <View style={{ flex: 1, paddingTop: 20 }}>
             <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
@@ -123,6 +190,7 @@ const logoutStack = (props) => {
         name="Dashboard"
         component={AuthenticatedTree}
         options={defaultNavigationOptions}
+        toggleModal={toggleModal}
       /> 
       <Drawer.Screen
       name="login"
@@ -135,15 +203,18 @@ const logoutStack = (props) => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    user: state.user
+    user: state.user,
+    app: state.app
   }
 }
 const mapDispatchToProps = (dispatch) => {
 return {
-  logOut: () => dispatch({ type: 'LOGOUT_USER'})
+  logOut: () => dispatch({ type: 'LOGOUT_USER'}),
+  toggleModal: () => dispatch({ type: 'TOGGLE_ADD_TIMER_MODAL'})
 }
 }
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthenticatedDrawer)
-// export default AuthenticatedDrawer
+
+export const someFunc = () => {toggleModal}

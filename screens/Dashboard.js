@@ -1,15 +1,13 @@
-import React, {useLayoutEffect} from "react";
+import React, {useLayoutEffect, useEffect, useState} from "react";
 import { View, Text, ScrollView, StyleSheet, FlatList, SafeAreaView } from "react-native";
 import GridTile from "../components/GridTile"
+import AddTimerModal from "../components/AddTimerModal"
 import { connect, useDispatch } from "react-redux";
 import Colors from '../constants/Colors'
-import { StackActions, useFocusEffect } from "@react-navigation/native";
-import appLevelConstants from "../constants/appLevelConstants"
-import { LinearGradient } from "expo-linear-gradient";
-import {UsageWithIcons} from '../utilFunctions'
 
 
-const Dashboard = ({user, app}) => {
+const Dashboard = ({user, app, props}) => {
+  console.log('props: ', props);
 
   const redirectAndLoad = () => {}
   // console.log('user: ', user);
@@ -38,6 +36,7 @@ const Dashboard = ({user, app}) => {
   
   return (
     <View id="dashboard">
+    <AddTimerModal visible={app.showAddTimerModal}/>
       <SafeAreaView >
       <FlatList
       keyExtractor={(item, index) => item.id}
