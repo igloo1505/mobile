@@ -1,11 +1,13 @@
 import React from "react";
 import { View, Text, Button, SafeAreaView } from "react-native";
 import { connect, useDispatch } from "react-redux";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
+
 import Colors from "../constants/Colors";
 import Dashboard from "../screens/Dashboard";
 import AuthScreen from "../screens/AuthScreen";
 import AddTimerModal from '../components/AddTimerModal'
+import FullScreenModal from '../screens/FullScreenModal'
 import CustomHeaderButton from "../components/UI/HeaderButton";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
@@ -52,10 +54,11 @@ const AuthenticatedStack = createStackNavigator();
 
 
 const AuthenticatedTree = (
+  props
 ) => {
 
   const dispatch = useDispatch()
-  const ReusableItem = ({ onPress }) => <Item title="Edit" onPress={onPress} />
+  const ReusableItem = (props) => <Item title={props.title} onPress={props.onPress} />
 
 const IoniconsHeaderButton = (props) => (
   <HeaderButton IconComponent={Ionicons} iconSize={23} color={Colors.dark.textColor} {...props} />
@@ -74,26 +77,17 @@ const IoniconsHeaderButton = (props) => (
             title="menu"
             iconName="ios-menu"
             onPress={() => {
-              navData.navigation.toggleDrawer();
+              props.navigation.toggleDrawer();
+              // console.log(props);
             }}
           />
         </HeaderButtons>
       ),
-   
-  
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-          <ReusableItem onPress={() => alert('Edit')} />
-          <OverflowMenu
-            style={{ marginHorizontal: 10 }}
-            OverflowIcon={<Ionicons name="ios-more" size={23} color={Colors.dark.textColor} />}
-          >
-            <HiddenItem title="Add Timer MothaFuckaaaa" onPress={() => {
-              console.log("Add Timer here")
-              dispatch({ type: 'TOGGLE_ADD_TIMER_MODAL'})
-  
-            }} style={{color: Colors.dark.textColor, fontSize: 50, textColor: Colors.dark.textColor}}/>
-          </OverflowMenu>
+          <ReusableItem onPress={() => console.log("Enter 'edit' mode here")} title="edit" />
+          <ReusableItem onPress={() => props.navigation.navigate("addTimer")} title="add" />
+         
         </HeaderButtons>
       )
     }
@@ -108,11 +102,6 @@ const IoniconsHeaderButton = (props) => (
     name="dashboard"
     component={Dashboard}
         options={navOptions}
-      />
-      <AuthenticatedStack.Screen
-      name="addTimer"
-      component={ShowAddTimer}
-      options={authenticatedNavigationOptions}
       />
     </AuthenticatedStack.Navigator>
   );
@@ -150,8 +139,6 @@ const logoutStack = (props) => {
 const toggleModal = () => {
   props.toggleModal()
 }
-
-
   return (
     <Drawer.Navigator
     drawerContent={({navigation}) => {
@@ -217,4 +204,34 @@ return {
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthenticatedDrawer)
 
-export const someFunc = () => {toggleModal}
+
+const RootAuthStack = createStackNavigator()
+
+export const RootAuthTree = (props) => {
+  return (
+    <RootAuthStack.Navigator mode="modal">
+    <RootAuthStack.Screen
+    name="main"
+    component={AuthenticatedDrawer}
+    options={{ headerShown: false }}
+    />
+    <RootAuthStack.Screen 
+    name="addTimer"
+    component={FullScreenModal}
+    options={({ navigation }) => ({
+      title: 'Add a Timer',
+      headerStyle: {
+        backgroundColor: "transparent"
+      },
+      headerRight: () => (
+        <AntDesign name="downcircleo" size={24} color="black" style={{marginRight: 20}} onPress={() => navigation.navigate("main") }/>
+      ),
+      headerLeft: () => (
+        undefined
+      )
+      
+    })}
+    />
+    </RootAuthStack.Navigator>
+    )
+  }

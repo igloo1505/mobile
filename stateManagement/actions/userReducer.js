@@ -19,7 +19,7 @@ const getToken = async () => {
 }
 
 const initialState = {
-  loggedIn: false,
+  loggedIn: true,
   token: null,
   user: null,
   triedAutoLogin: false,

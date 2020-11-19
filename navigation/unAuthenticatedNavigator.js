@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, Button, SafeAreaView } from "react-native";
-
 import { connect, useDispatch } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";

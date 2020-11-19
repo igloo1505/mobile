@@ -5,7 +5,7 @@ import {
 } from "../constants/appLevelConstants";
 import { AsyncStorage } from "react-native";
 import { UnauthenticatedDrawer } from "./UnAuthenticatedNavigator";
-import  AuthenticatedDrawer  from "./authenticatedNavigator";
+import  AuthenticatedDrawer, {RootAuthTree}  from "./authenticatedNavigator";
 import { Spinner } from "native-base";
 import {
   NavigationContainer,
@@ -18,27 +18,19 @@ import { connect, useDispatch } from "react-redux";
 //! Props used once redux setup
 // { user, loading, props }
 // !! Add user back into props, just avoiding login screen for now
-const MasterNavigator = ({  app }) => {
+const MasterNavigator = ({  user, app, props }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   // if (user.loggedIn) {
   //   setIsLoggedIn(true);
   // }
+  console.log("user", user);
   let loading = loading || false;
-  let user = {}
-  user.loggedIn = true
   const navigationRef = React.useRef();
-  // useReduxDevToolsExtension(navigationRef);
-  // props = props || {};
 
-  // console.log(user);
-  // console.log(app);
-
-  // let isAuthenticated = user.loggedIn || false;
-  // loading = false;
   if (!loading) {
     return (
       <NavigationContainer >
-        {user.loggedIn ? <AuthenticatedDrawer /> : <UnauthenticatedDrawer />}
+        {user.loggedIn ? <RootAuthTree/> : <UnauthenticatedDrawer/>}
       </NavigationContainer>
     );
   } else if (loading) {
@@ -53,6 +45,7 @@ const MasterNavigator = ({  app }) => {
 const mapStateToProps = (state, ownProps) => ({
   user: state.user,
   app: state.app,
+  props: ownProps
   // medication: state.medication
 });
 

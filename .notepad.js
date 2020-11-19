@@ -13,3 +13,10 @@
     //     "avdName": "Pixel_2_API_29"
     //   }
     // }
+
+
+    <AuthenticatedStack.Screen
+      name="addTimer"
+      component={ShowAddTimer}
+      options={authenticatedNavigationOptions}
+      />

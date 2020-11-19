@@ -25,6 +25,7 @@ const AddTimerModal = ({user, app, props}) => {
           Alert.alert("Modal has been closed.");
         }}
         presentationStyle="formSheet"
+        // transparent="false"
       >
         <View style={styles.centeredView}>
         <View style={styles.modalView}>
